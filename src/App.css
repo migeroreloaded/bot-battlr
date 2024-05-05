@@ -1,8 +1,9 @@
 /* Global styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f5f5f5;
 }
 
 .container {
@@ -15,23 +16,23 @@ body {
 header {
   background-color: #333;
   color: #fff;
-  padding: 10px 0;
+  padding: 20px 0;
   text-align: center;
+  font-size: 24px;
 }
 
 /* Bot Collection styles */
 .bot-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
 .bot-profile {
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .bot-profile:hover {
@@ -40,30 +41,39 @@ header {
 
 .bot-profile img {
   width: 100%;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.bot-profile h2 {
-  margin-top: 10px;
-  font-size: 1.5rem;
+.bot-profile-details {
+  padding: 20px;
 }
 
-.bot-profile p {
+.bot-profile-details h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.bot-profile-details p {
   margin: 5px 0;
 }
 
 /* Enlist button styles */
-button {
-  padding: 8px 16px;
+.enlist-button {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 0 0 10px 10px;
   background-color: #007bff;
   color: #fff;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.enlist-button:hover {
   background-color: #0056b3;
 }
 
@@ -75,14 +85,15 @@ button:hover {
   margin-bottom: 20px;
 }
 
-.sort-bar select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.sort-bar label {
+  font-size: 18px;
 }
 
-.sort-bar label {
-  margin-right: 10px;
+.sort-bar select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 /* Footer styles */

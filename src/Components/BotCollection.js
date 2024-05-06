@@ -4,8 +4,8 @@ import SortBar from './SortBar';
 
 function BotCollection({ enlistBot }) {
   const [bots, setBots] = useState([]);
-  const [filteredBots, setFilteredBots] = useState([]);
   const [enlistedBots, setEnlistedBots] = useState([]);
+  const [filteredBots, setFilteredBots] = useState([]);
   const [enlistedClasses, setEnlistedClasses] = useState([]);
 
   useEffect(() => {
@@ -22,8 +22,6 @@ function BotCollection({ enlistBot }) {
     enlistBot(bot);
     setEnlistedBots([...enlistedBots, bot]); // Add enlisted bot
     setEnlistedClasses([...enlistedClasses, bot.bot_class]); // Add enlisted class
-    const updatedBots = filteredBots.filter(b => b.bot_class !== bot.bot_class); // Filter out enlisted bots from same class
-    setFilteredBots(updatedBots);
   };
 
   const sortByAttribute = (attribute) => {
@@ -47,24 +45,6 @@ function BotCollection({ enlistBot }) {
       <h1>Bot Collection</h1>
       <SortBar sortBy={sortByAttribute} filterByClass={filterByClass} />
       <div className="bot-list">
-        {/* Render enlisted bots at the top */}
-        {enlistedBots.map(bot => (
-          <div key={bot.id}>
-            <Link to={`/bots/${bot.id}`}>
-              <div className="bot-profile">
-                <img src={bot.avatar_url} alt={bot.name} />
-                <h2>{bot.name}</h2>
-                <p>Health: {bot.health}</p>
-                <p>Damage: {bot.damage}</p>
-                <p>Armor: {bot.armor}</p>
-                <p>Class: {bot.bot_class}</p>
-                <p>Catchphrase: {bot.catchphrase}</p>
-              </div>
-            </Link>
-            <button disabled>Enlisted</button> {/* Disable enlist button for enlisted bots */}
-          </div>
-        ))}
-        {/* Render remaining bots */}
         {filteredBots.map(bot => (
           <div key={bot.id}>
             <Link to={`/bots/${bot.id}`}>

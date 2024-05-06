@@ -6,6 +6,7 @@ function BotCollection({ enlistBot }) {
   const [bots, setBots] = useState([]);
   const [filteredBots, setFilteredBots] = useState([]);
   const [selectedSortAttribute, setSelectedSortAttribute] = useState(null);
+  const [enlistedBotsByClass, setEnlistedBotsByClass] = useState({});
 
   useEffect(() => {
     fetch('http://localhost:4000/bots')
@@ -17,9 +18,33 @@ function BotCollection({ enlistBot }) {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  useEffect(() => {
+    // Initialize enlistedBotsByClass with an empty array for each bot_class
+    const initialEnlistedBotsByClass = {};
+    bots.forEach(bot => {
+      if (!initialEnlistedBotsByClass[bot.bot_class]) {
+        initialEnlistedBotsByClass[bot.bot_class] = [];
+      }
+    });
+    setEnlistedBotsByClass(initialEnlistedBotsByClass);
+  }, [bots]);
+
   const handleEnlist = (bot) => {
-    enlistBot(bot);
-    setFilteredBots(filteredBots.filter(b => b.id !== bot.id)); // Remove enlisted bot from filtered list
+    // Check if any bot from the same class is already enlisted
+    if (!enlistedBotsByClass[bot.bot_class].some(b => b.id !== bot.id)) {
+      // Enlist the bot
+      enlistBot(bot);
+      setFilteredBots(filteredBots.filter(b => b.id !== bot.id)); // Remove enlisted bot from filtered list
+      // Add the enlisted bot to the enlistedBotsByClass state
+      setEnlistedBotsByClass(prevState => ({
+        ...prevState,
+        [bot.bot_class]: [...prevState[bot.bot_class], bot]
+      }));
+    } else {
+      // Bot of the same class already enlisted, prevent enlistment
+      console.log(`A bot from class ${bot.bot_class} is already enlisted.`);
+      alert(`A bot from class ${bot.bot_class} is already enlisted.`);
+    }
   };
 
   const sortByAttribute = (attribute) => {
@@ -33,7 +58,6 @@ function BotCollection({ enlistBot }) {
       setFilteredBots(sortedBots);
     }
   };
-  
 
   const filterByClass = (selectedClasses) => {
     if (selectedClasses.length === 0) {

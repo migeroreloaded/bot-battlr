@@ -43,6 +43,7 @@ function App() {
     <Router>
       <div className="App">
         <h1>Bot Battleground</h1>
+        <YourBotArmy army={enlistedBots} releaseBot={releaseBot} dischargeBot={dischargeBot} />
         <Routes>
           <Route path="/" element={<BotCollection enlistBot={enlistBot} />} />
           <Route path="/your-bot-army" element={<YourBotArmy army={enlistedBots} releaseBot={releaseBot} dischargeBot={dischargeBot} />} />

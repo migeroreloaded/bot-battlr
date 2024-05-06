@@ -77,6 +77,71 @@ header {
   background-color: #0056b3;
 }
 
+/* Your Bot Army styles */
+.your-bot-army {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.army-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.army-profile {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: calc(33.33% - 20px); /* Adjust based on desired layout */
+  margin-right: 20px; /* Add some spacing between army profiles */
+  margin-bottom: 20px; /* Add some spacing between army profiles */
+}
+
+.army-profile:hover {
+  transform: translateY(-5px);
+}
+
+.army-profile img {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.army-profile-details {
+  padding: 20px;
+}
+
+.army-profile-details h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.army-profile-details p {
+  margin: 5px 0;
+}
+
+/* Release and Discharge button styles */
+.release-button,
+.discharge-button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.release-button:hover,
+.discharge-button:hover {
+  background-color: #bd2130;
+}
+
 /* SortBar styles */
 .sort-bar {
   display: flex;

@@ -4,9 +4,8 @@ import SortBar from './SortBar';
 
 function BotCollection({ enlistBot }) {
   const [bots, setBots] = useState([]);
-  const [enlistedBots, setEnlistedBots] = useState([]);
   const [filteredBots, setFilteredBots] = useState([]);
-  const [enlistedClasses, setEnlistedClasses] = useState([]);
+  const [selectedSortAttribute, setSelectedSortAttribute] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:4000/bots')
@@ -20,23 +19,36 @@ function BotCollection({ enlistBot }) {
 
   const handleEnlist = (bot) => {
     enlistBot(bot);
-    setEnlistedBots([...enlistedBots, bot]); // Add enlisted bot
-    setEnlistedClasses([...enlistedClasses, bot.bot_class]); // Add enlisted class
+    setFilteredBots(filteredBots.filter(b => b.id !== bot.id)); // Remove enlisted bot from filtered list
   };
 
   const sortByAttribute = (attribute) => {
-    const sortedBots = [...filteredBots].sort((a, b) => {
-      return a[attribute] - b[attribute];
-    });
-    setFilteredBots(sortedBots);
+    if (!attribute) {
+      setFilteredBots(bots); // Show all bots without sorting
+    } else {
+      const sortedBots = [...filteredBots].sort((a, b) => {
+        return a[attribute] - b[attribute];
+      });
+      setSelectedSortAttribute(attribute); // Update selected sort attribute
+      setFilteredBots(sortedBots);
+    }
   };
+  
 
   const filterByClass = (selectedClasses) => {
     if (selectedClasses.length === 0) {
       setFilteredBots(bots); // If no classes selected, show all bots
     } else {
-      const filtered = bots.filter(bot => selectedClasses.includes(bot.bot_class) && !enlistedClasses.includes(bot.bot_class));
-      setFilteredBots(filtered);
+      const filtered = bots.filter(bot => selectedClasses.includes(bot.bot_class));
+      if (selectedSortAttribute) {
+        // Preserve current sorting order while applying filter
+        const sortedFiltered = filtered.sort((a, b) => {
+          return a[selectedSortAttribute] - b[selectedSortAttribute];
+        });
+        setFilteredBots(sortedFiltered);
+      } else {
+        setFilteredBots(filtered);
+      }
     }
   };
 

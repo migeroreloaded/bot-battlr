@@ -1,7 +1,6 @@
-// SortBar.js
 import React, { useState } from 'react';
 
-const botClasses = ['Support', 'Medic', 'Assault', 'Tank']; // Define available bot classes
+const botClasses = ["Support", "Medic", "Assault", "Defender", "Captain", "Witch"]; // Define available bot classes
 
 function SortBar({ sortBy, filterByClass }) {
   const [selectedClasses, setSelectedClasses] = useState([]); // State to track selected classes
@@ -9,17 +8,28 @@ function SortBar({ sortBy, filterByClass }) {
   const handleClassChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
-      setSelectedClasses([...selectedClasses, value]); // Add class to selected classes
+      setSelectedClasses(prevSelectedClasses => [...prevSelectedClasses, value]); // Add class to selected classes
     } else {
-      setSelectedClasses(selectedClasses.filter(c => c !== value)); // Remove class from selected classes
+      setSelectedClasses(prevSelectedClasses => prevSelectedClasses.filter(c => c !== value)); // Remove class from selected classes
     }
-    filterByClass(selectedClasses); // Call filterByClass with selected classes
+    filterByClass(checked ? [...selectedClasses, value] : selectedClasses.filter(c => c !== value)); // Pass updated selected classes to filterByClass
+  };
+  
+ 
+  const handleSortChange = (event) => {
+    const { value } = event.target;
+    if (value === 'All') {
+      sortBy(null); // Pass null or any other value that represents "All" to indicate no sorting
+    } else {
+      sortBy(value); // Call sortBy with selected attribute
+    }
   };
 
   return (
     <div>
       <h3>Sort By:</h3>
-      <select onChange={(e) => sortBy(e.target.value)}>
+      <select onChange={(e) => handleSortChange(e)}>
+        <option value="All">---None---</option>
         <option value="health">Health</option>
         <option value="damage">Damage</option>
         <option value="armor">Armor</option>

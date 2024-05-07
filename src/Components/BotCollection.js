@@ -8,12 +8,23 @@ function BotCollection({ enlistBot }) {
   const [selectedSortAttribute, setSelectedSortAttribute] = useState(null);
   const [enlistedBotsByClass, setEnlistedBotsByClass] = useState({});
 
+  // Use when running json-server --watch db.json --port 4000
+  // useEffect(() => {
+  //   fetch('http://localhost:4000/bots')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setBots(data);
+  //       setFilteredBots(data); // Initialize filteredBots with all bots
+  //     })
+  //     .catch(error => console.error('Error fetching data:', error));
+  // }, []);
+
   useEffect(() => {
-    fetch('http://localhost:4000/bots')
+    fetch('https://migeroreloaded.github.io/bot-battlr-json/db.json')
       .then(response => response.json())
       .then(data => {
-        setBots(data);
-        setFilteredBots(data); // Initialize filteredBots with all bots
+        setBots(data.bots);
+        setFilteredBots(data.bots); // Initialize filteredBots with all bots
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
